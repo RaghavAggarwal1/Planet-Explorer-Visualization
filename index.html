@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Homework #4: Innovative Visualization Design - CSE 578 - Spring 2023</title>
+        <!-- Import D3.js library -->
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <!-- Import Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Import jQuery and Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        
+        <script src="js/h4.js"></script>
+
+        <style>
+            body {
+            background-image: url("img/pngtree-cool-black-world-map-earth-background-material-image_133876.jpeg");
+            background-size: 2200px;
+            color: white;
+            }
+        </style>
+
+    </head>
+    <body>
+        <!-- creating a div for the whole display -->
+        <div class="whole">
+            <!-- div for the heading -->
+            <div class="heading" style="height: 50px;">
+            <h2 class="text-center" style="margin-top: 2px; margin-bottom: 2px;">Homework #4: Innovative Visualization Design</h1>
+            <h3 class="text-center" style="margin-top: 0px; margin-bottom: 2px;">Raghav Aggarwal - <a href="mailto:raggar13@asu.edu">raggar13@asu.edu</a></h3>
+            </div>
+            
+            <hr style="border: 1px solid;">
+            <!-- div for the remainder -->
+            <div class="part2">
+                <!-- creating a div for the chart -->
+                <div class="col-md-10" id="my_dataviz">
+                    <svg id="winArea" width="1600" height="900"></svg>
+                </div>
+                <!-- creating a svh for controller -->
+                <div class="col-md-2" style="color: black;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Control Panel</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group" id="planet_type">
+                                <label for="planet_type">Planet Type:</label>
+                                <select class="form-control" id="planetType" onchange="getPlanetType()">
+                                    <option value="all">All</option>
+                                    <option value="Terrestrial">Terrestrial</option>
+                                    <option value="Gas Giant">Gas Giant</option>
+                                    <option value="Neptune-like">Neptune-like</option>
+                                    <option value="Super Earth">Super Earth</option>
+                                    <option value="Unknown">Unknown</option>
+                                </select>
+                            </div>
+                        
+                            <!-- creating a div for opacity -->
+                            <div class="form-group">
+                                <label>Distance:</label><br>
+                                <label for="to_input">To: <span id="character-name1">60</span> Light-year</label>
+                                <input type="range" class="form-control" id="to_input" min="0" max="6000" step="30" value="60" onchange="getDistance()">
+
+                                <label for="from_input">From: <span id="character-name2">0</span> Light-year</label>
+                                <input type="range" class="form-control" id="from_input" min="0" max="6000" step="30" value="0" onchange="getDistance()">
+                            </div>
+                            <div>
+                                <label>Discovery Year:</label><br>
+                                <label for="discoveryYear">Start Year:</label>
+                                <input type="number" id="startYear" name="startYear" value="1995" style="width: 50px;" min="1992" max="2023" onchange="getYear()"><br>
+                                <label for="endYear">End Year:</label>
+                                <input type="number" id="endYear" name="endYear" value="2023" style="width: 50px;" min="1992" max="2023" onchange="getYear()">
+                              </div>
+                              <hr style="border: 1px solid; margin-top: 2px; margin-bottom: 2px;">
+                              <div>
+                                <label style="color: red;">Visualisation Information</label><br>
+                                <h4 style="margin-top: 0px; margin-bottom: 0px;"><a href="#description" style="color: magenta;">Scroll Down page for short description or <a href="#description" style="color: blue;">click here</a></a></h4><br>
+                                <p><b style="color: blue;">Planet Explorer</b> compares various planets, on following parameter - </p>
+                                <ul>
+                                    <li>The <b>x-axis</b> represents the <b>discovery Year (quantitative attribute)</b>.</li>
+                                    <li>The <b>y-axis</b> represents the <b>distance from Earth. (quantitative attribute).</b></li>
+                                    <li>The <b>size of each bubble</b> represents the <b>planet's radius</b>.</li>
+                                    <li>The <b>opacity</b> indicates the planet's <b>stellar magnitude</b>.</li>
+                                    <li>The <b>color</b> of each bubble represents the <b>planet's type (categorical attribute)</b>.</li>
+                                    <li>Each planet contains a small <b>doughnut chart</b> that shows the proportion of the planet's mass and radius compared to the total mass and radius of planets in our solar system.</li>
+                                    <li>The chart has a <b>tooltip</b> that provides more information when users <i>hover over the Visualization</i>.</li>
+                                    <li>Users can <b>interact</b> with the chart to explore it in more detail.</li>
+                                </ul>
+
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="description" style="float: left; width: 100%; background-color: #0D1117; font-size: medium; margin-top: 0px;">
+            <div style="margin-left: 20px;">
+                <h2>Planet Explorer Visualization</h2>
+                <p>This bubble chart visualizes different types of planets discovered from 1995-2022, based on their distance from Earth in Light-years (upto 6000 Light-year from Earth).
+                    <br>Radius of each planet is proportional to the planets real radius, The stellar magnitude/Brightness of the planet is represented by the opacity of color. Higher the Brightnes, higher is the opacity. 
+                    <br> The color of each bubble represents the type of planet. A legend at the bottom right indicates the meaning of each color. 
+                    <br>Inside each bubble, there is a doughnut chart that shows the proportion of the planet's mass and radius compared to the total mass and radius of planets in our solar system. 
+                    <br>The chart has a tooltip that displays all the information of the selected planet when hovered over the planet(bubble) and the doughnut chart.
+                    <br>Data can also be filtered by planet type, distance, and discovery year, from the Control Panel
+                </p>
+                <h3>Marks:</h3>
+                <ul>
+                    <li>"innovative" view - that features a <b>Bubble chart</b> with each bubble containing a <b>Doughnut Chart</b></li>
+                    <li>Tooltip</li>
+                </ul>
+                <h3>Channels:</h3>
+                <ul>
+                    <li>X-Axis (Year of Discovery)</li>
+                    <li>Y-Axis (Distance from Earth in Light-years)</li>
+                    <li>Bubble size (Planet Radius)</li>
+                    <li>Bubble opacity (Stellar Magnitude)</li>
+                    <li>Bubble color (Planet Type)</li>
+                    <li>Doughnut Chart slices (Planet Mass and Radius wrt to total Mass and Radius of all planets in our solar system)</li>
+                </ul>
+                <h3>Interactions:</h3>
+                <ul>
+                    <li>Hover over a bubble to show all the information of the selected planet</li>
+                    <li>Hover over the doughnut chart to show the information of the selected pie. (Planet Mass/Radius wrt to total Mass/Radius of all planets in our solar system)</li>
+                </ul>
+                <h3>Personal Note:</h3>
+                <p>This visualization provides a detalied and interactive view of planetary systems, allowing the user to compare and contrast various types of planets based on their properties.
+                    <br> Futhermore, The doughnut chart inside each bubble provides additional details about the planet's mass and radius, making it easier to understand the relative sizes of different planets. 
+                    <br> Overall, this visualization is an effective way to explore and learn about the lesser known discovered planets.</p>
+            </div>
+          </div>
+    </body>
+</html>
